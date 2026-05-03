@@ -209,12 +209,6 @@ export default function Login() {
                   Create an account
                 </Link>
               </p>
-
-              <p className="text-[10px] text-text-muted mt-8 text-center leading-relaxed opacity-60">
-                This site is protected by reCAPTCHA and the Google 
-                <a href="https://policies.google.com/privacy" className="underline hover:text-text-primary transition-colors ml-1" target="_blank" rel="noreferrer">Privacy Policy</a> and 
-                <a href="https://policies.google.com/terms" className="underline hover:text-text-primary transition-colors ml-1" target="_blank" rel="noreferrer">Terms of Service</a> apply.
-              </p>
             </>
           )}
         </div>
@@ -222,3 +216,4 @@ export default function Login() {
     </div>
   );
 }
+
