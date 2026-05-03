@@ -216,3 +216,12 @@
     @apply bg-clip-text text-transparent bg-gradient-to-r from-text-primary to-text-secondary font-bold;
   }
 }
+
+/**
+ * reCAPTCHA Optimization
+ * We hide the default floating badge to prevent UI overlap with the AI Companion.
+ * Compliance is maintained by showing the required legal disclaimer on auth forms.
+ */
+.grecaptcha-badge {
+  visibility: hidden !important;
+}
