@@ -327,6 +327,34 @@ const useTaskStore = create((set, get) => ({
   },
 
   /**
+   * Removes a "Time-Block" from a task node.
+   */
+  deleteTimeBlock: async (taskId, blockId, isGuest = false) => {
+    if (isGuest) {
+      const tasks = get().tasks.map(t => {
+        if (t._id !== taskId) return t;
+        return { ...t, timeBlocks: (t.timeBlocks || []).filter(b => b._id !== blockId) };
+      });
+      saveGuestTasks(tasks);
+      set({ tasks });
+      toast.success('Time slot removed.');
+      return { success: true };
+    }
+    try {
+      const { data } = await api.delete(`/tasks/${taskId}/timeblocks/${blockId}`);
+      set(state => ({
+        tasks: state.tasks.map(t => t._id.toString() === taskId.toString() ? data.task : t),
+        selectedTask: state.selectedTask?._id?.toString() === taskId.toString() ? data.task : state.selectedTask,
+      }));
+      toast.success('Time slot removed.');
+      return { success: true };
+    } catch (err) {
+      toast.error('Failed to remove time slot.');
+      return { success: false };
+    }
+  },
+
+  /**
    * Initiates the 'Neural Lift' sync to migrate guest data to the cloud.
    */
   syncGuestTasks: async () => {
