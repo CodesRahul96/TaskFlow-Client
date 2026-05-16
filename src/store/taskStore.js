@@ -81,8 +81,8 @@ const useTaskStore = create((set, get) => ({
    * Synchronizes tasks from the remote node or local persistence.
    * Implements query-parameter orchestration for server-side filtering.
    */
-  fetchTasks: async (isGuest = false) => {
-    set({ loading: true });
+  fetchTasks: async (isGuest = false, isBackground = false) => {
+    if (!isBackground) set({ loading: true });
     if (isGuest) {
       const guestTasks = getGuestTasks();
       set({ tasks: guestTasks, loading: false });
@@ -109,7 +109,9 @@ const useTaskStore = create((set, get) => ({
       set({ tasks: deduplicateTasks(data.tasks), loading: false });
     } catch (err) {
       set({ loading: false });
-      toast.error('Failed to synchronize workspace.');
+      if (!isBackground) {
+        toast.error('Failed to synchronize workspace.');
+      }
     }
   },
 
